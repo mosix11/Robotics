@@ -335,46 +335,296 @@ def transform_dynamic_model_generalized_coordinate(p, q, M, c, g, n, t):
 #*******************************************************************************************************************************
 
 
-t = symbols('t', real=True, nonnegative=True)
-q1, q2, q3 = Function('q_1', real=True)(t), Function('q_2', real=True)(t), Function('q_3', real=True)(t)
-l3 = symbols('l_3', real=True, positive=True)
-m1, m2, m3 = symbols('m_1, m_2, m_3', real=True, positive=True)
-d1, d2, d3 = symbols('d_1, d_2, d_3', real=True, positive=True)
-gravity = symbols('g', real=True, nonnegative=True)
+# t = symbols('t', real=True, nonnegative=True)
+# q1, q2, q3 = Function('q_1', real=True)(t), Function('q_2', real=True)(t), Function('q_3', real=True)(t)
+# l3 = symbols('l_3', real=True, positive=True)
+# m1, m2, m3 = symbols('m_1, m_2, m_3', real=True, positive=True)
+# d1, d2, d3 = symbols('d_1, d_2, d_3', real=True, positive=True)
+# gravity = symbols('g', real=True, nonnegative=True)
 
-q_vector = Matrix([q1, q2, q3])
+# q_vector = Matrix([q1, q2, q3])
 
-Dh_table = [
-    [q1, 0, pi/2, pi/2],
-    [q2, 0, -pi/2, pi/2],
-    [0, l3, q3+pi/2, 0]
-]
+# Dh_table = [
+#     [q1, 0, pi/2, pi/2],
+#     [q2, 0, -pi/2, pi/2],
+#     [0, l3, q3+pi/2, 0] 
+# ]
 
-DOF = 3
+# DOF = 3
 
-masses = [m1, m2, m3]
-g_vector = Matrix([0, -gravity, 0])
-inertia_matrices = []
+# masses = [m1, m2, m3]
+# g_vector = Matrix([0, -gravity, 0])
+# inertia_matrices = []
 
-for i in range(DOF):
-    I = Matrix([
-        [symbols('I_' + str(i+1) + '.11', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.12', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.13', real=True, nonnegative=True)],
-        [symbols('I_' + str(i+1) + '.21', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.22', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.23', real=True, nonnegative=True)],
-        [symbols('I_' + str(i+1) + '.31', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.32', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.33', real=True, nonnegative=True)]
-    ])
-    inertia_matrices.append(I)
+# for i in range(DOF):
+#     I = Matrix([
+#         [symbols('I_' + str(i+1) + '.11', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.12', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.13', real=True, nonnegative=True)],
+#         [symbols('I_' + str(i+1) + '.21', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.22', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.23', real=True, nonnegative=True)],
+#         [symbols('I_' + str(i+1) + '.31', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.32', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.33', real=True, nonnegative=True)]
+#     ])
+#     inertia_matrices.append(I)
     
-CoM = Matrix([
-    [0, 0, d3-l3],
-    [d1-q1, d2-q2, 0],
-    [0, 0, 0]
-])
+# CoM = Matrix([
+#     [0, 0, d3-l3],
+#     [d1-q1, d2-q2, 0],
+#     [0, 0, 0]
+# ])
 
-# compute_forward_dynamics(Dh_table, q_vector, CoM, masses, g_vector, inertia_matrices, None, None, None, None, t)
-u, M, c, g, B, U_v, U_c = compute_forward_dynamics(Dh_table, q_vector, CoM, masses, g_vector, inertia_matrices, None, None, None, None, t)
-p = Matrix([
-    q2+l3*cos(q3), q1+l3*sin(q3), q3
-])
-up, Mp, cp, gp = transform_dynamic_model_generalized_coordinate(p, q_vector, M, c, g, c+g, t)
+# # compute_forward_dynamics(Dh_table, q_vector, CoM, masses, g_vector, inertia_matrices, None, None, None, None, t)
+# u, M, c, g, B, U_v, U_c = compute_forward_dynamics(Dh_table, q_vector, CoM, masses, g_vector, inertia_matrices, None, None, None, None, t)
+# p = Matrix([
+#     q2+l3*cos(q3), q1+l3*sin(q3), q3
+# ])
+# up, Mp, cp, gp = transform_dynamic_model_generalized_coordinate(p, q_vector, M, c, g, c+g, t)
 
-print_latex(Mp)
+# print_latex(Mp)
+
+
+
+
+
+
+
+
+#*******************************************************************************************************************************
+#*******************************************************************************************************************************
+
+# t = symbols('t', real=True, nonnegative=True)
+# DOF = 3
+# q1, q2, q3 = Function('q_1', real=True)(t), Function('q_2', real=True)(t), Function('q_3', real=True)(t)
+# q = Matrix([q1, q2, q3])
+# l1, l2, l3 = symbols('l_1, l_2, l_3', real=True, positive=True)
+# m1, m2, m3 = symbols('m_1, m_2, m_3', real=True, positive=True)
+# d1, d2, d3 = symbols('d_1, d_2, d_3', real=True, positive=True)
+# gravity = symbols('g', real=True, nonnegative=True)
+
+# masses = [m1, m2, m3]
+# g_vector = Matrix([0, -gravity, 0])
+# # g_vector = Matrix([-gravity, 0, 0])
+
+
+# inertia_matrices = []
+
+# for i in range(DOF):
+#     I = Matrix([
+#         [symbols('I_' + str(i+1) + '.11', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.12', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.13', real=True, nonnegative=True)],
+#         [symbols('I_' + str(i+1) + '.21', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.22', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.23', real=True, nonnegative=True)],
+#         [symbols('I_' + str(i+1) + '.31', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.32', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.33', real=True, nonnegative=True)]
+#     ])
+#     inertia_matrices.append(I)
+
+# CoM = Matrix([
+#     [d1, 0, d3],
+#     [0, d2, 0],
+#     [0, 0, 0]
+# ])
+
+
+#*******************************************************************************************************************************
+#*******************************************************************************************************************************
+
+
+# t = symbols('t', real=True, nonnegative=True)
+# DOF = 2
+# q1, q2 = Function('q_1', real=True)(t), Function('q_2', real=True)(t)
+# q = Matrix([q1, q2])
+# l1, l2 = symbols('l_1, l_2', real=True, positive=True)
+# m1, m2 = symbols('m_1, m_2', real=True, positive=True)
+# d1, d2 = symbols('d_1, d_2', real=True, positive=True)
+# gravity = symbols('g', real=True, nonnegative=True)
+
+# masses = [m1, m2]
+# # g_vector = Matrix([0, -gravity, 0])
+# # g_vector = Matrix([gravity, 0, 0])
+# g_vector = Matrix([0, 0, -gravity])
+
+# inertia_matrices = []
+
+# for i in range(DOF):
+#     I = Matrix([
+#         [symbols('I_' + str(i+1) + '.11', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.12', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.13', real=True, nonnegative=True)],
+#         [symbols('I_' + str(i+1) + '.21', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.22', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.23', real=True, nonnegative=True)],
+#         [symbols('I_' + str(i+1) + '.31', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.32', real=True, nonnegative=True), symbols('I_' + str(i+1) + '.33', real=True, nonnegative=True)]
+#     ])
+#     inertia_matrices.append(I)
+
+# CoM = Matrix([
+#     [0, -l2+d2],
+#     [-l1+d1, 0],
+#     [0, 0]
+# ])
+
+
+#*******************************************************************************************************************************
+#*******************************************************************************************************************************
+
+
+## R
+# DH_table = [
+#     [0, l1, q1, 0]
+# ]
+
+## RR
+# DH_table = [
+#     [0, l1, q1, 0],
+#     [0, l2, q2, 0]
+# ]
+
+## RRR
+# DH_table = [
+#     [0, l1, q1, 0],
+#     [0, l2, q2, 0],
+#     [0, l3, q3, 0]
+# ]
+
+# ## PR with P on x axis of world frame
+# DH_table = [
+#     [q1, 0, pi, pi/2],
+#     [0, l2, pi/2+q2, 0]
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [0, 0, 1, 0],
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 0, 1]
+# ])
+
+
+# PR with P on y axis of world frame
+# DH_table = [
+#     [q1, 0, 0, pi/2],
+#     [0, l2, q2, 0]
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [1, 0, 0, 0],
+#     [0, 0, 1, 0],
+#     [0, -1, 0, 0],
+#     [0, 0, 0, 1]
+# ])
+
+## RP with pi/2 angle between links
+# DH_table = [
+#     [0, l1, q1, pi/2],
+#     [q2, 0, 0, 0],
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 1, 0],
+#     [0, 0, 0, 1]
+# ])
+
+
+## RP with 0 angle between links
+# DH_table = [
+#     # [0, 0, q1+pi/2, pi/2],
+#     # [q2+l1, 0, 0, 0],
+#     [0, 0, q1+pi/2, pi/2],
+#     [q2, 0, 0, 0],
+# ]
+
+# HTM_RF0_to_RFw = Matrix([
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 1, 0],
+#     [0, 0, 0, 1]
+# ])
+
+## RRP
+# DH_table = [
+#     [0, l1, q1, 0],
+#     [0, l2, q2, pi/2],
+#     [q3, 0, 0, 0],
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 1, 0],
+#     [0, 0, 0, 1]
+# ])
+
+
+## RPR
+# DH_table = [
+#     [0, l1, q1, -pi/2],
+#     [q2, 0, 0, pi/2], 
+#     [0, l3, q3, 0],
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 1, 0],
+#     [0, 0, 0, 1]
+# ])
+
+## RPP
+
+
+## PRR
+# with P on x axis of world frame
+# DH_table = [
+#     [q1, 0, pi, pi/2],
+#     [0, l2, pi/2+q2, 0],
+#     [0, l3, q3, 0]
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [0, 0, 1, 0],
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 0, 1]
+# ])
+
+## PRR
+# with P on y axis of world frame
+# DH_table = [
+#     [q1, 0, 0, pi/2],
+#     [0, l2, q2, 0],
+#     [0, l3, q3, 0]
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [1, 0, 0, 0],
+#     [0, 0, 1, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 0, 1]
+# ])
+
+## PPR
+# DH_table = [
+#     [q1, 0, pi/2, pi/2],
+#     [q2, 0, pi/2, pi/2],
+#     [0, l3, q3, 0]
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [0, 0, 1, 0],
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 0, 1]
+# ])
+
+## PRP
+# DH_table = [
+#     [q1, 0, pi, pi/2],
+#     [0, 0, q2+pi, pi/2],
+#     [q3, 0, 0, 0]
+# ]
+# HTM_RF0_to_RFw = Matrix([
+#     [0, 0, 1, 0],
+#     [1, 0, 0, 0],
+#     [0, 1, 0, 0],
+#     [0, 0, 0, 1]
+# ])
+
+
+
+# dk_model = DiK.DireckKinematic(DH_table)
+# HTM, rot, pos = dk_model.compute_DK(0, 2)
+
+# print_latex(simp(HTM_RF0_to_RFw * HTM))
+# # print(DK.get_analytic_jacobian(pos, [q1, q2, q3]))
+
+
+# u, M, c, g, B, U_v, U_c = compute_forward_dynamics(DH_table, q, CoM, masses, g_vector, inertia_matrices, None, None, None, None, t)
+# print_latex(M)
+# print_latex(c)
+# print_latex(g)
+# print_latex(g.jacobian(q).norm(2))

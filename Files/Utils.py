@@ -3,6 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sympy import *
 
+
+def print_latex(x):
+    print(latex(x), '\n \n \n')
+
+def simp(exp):
+    return simplify(factor(exp))
+
 def degree_to_radian(degree):
     rad = degree*(pi/180)
     return rad
@@ -78,3 +85,27 @@ def singular_value_decomposition(A):
         V = AH * U * S.inv()
 
     return U, S, V
+
+
+def get_matrix_norm(A):
+    return simp(A.norm(2)) 
+
+
+def laplace_simp(eq, qt, qs, t, s):
+    lq = []
+    for q_i in qt:
+        lq.append(laplace_transform(q_i, t, s))
+    
+    dic = {}
+    for i, lq_i in enumerate(lq):
+        dic[lq_i] = qs[i]
+    
+    for q_i in qt:
+        dic[q_i.subs(t, 0)] = 0
+        
+    for q_i in qt:
+        dic[q_i.diff(t).subs(t, 0)] = 0
+    
+    eq = eq.subs(dic)
+    
+    return eq

@@ -45,6 +45,15 @@ def get_analytic_jacobian(r, variables):
     return simplify(factor(j_r))
 
 
+
+def get_geometric_jacobian(pos, rot, q):
+    J_v = pos.jacobian(q)
+    omega = get_omega_from_rotmat(rot)
+    J_w = omega.jacobian(q)
+    J_geometric = Matrix.vstack(J_v, J_w)
+    return J_geometric
+    
+
 def get_det_j(j):
     (m, n) = shape(j)
     if m == n:
